@@ -13,11 +13,17 @@ import ru.practicum.ewm.dto.EndpointHitDto;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class StatisticsClient extends BaseClient {
+    private static final DateTimeFormatter dtFormatter = DateTimeFormatter
+            .ofPattern("yyyy-MM-dd HH:mm:ss")
+            .withZone(ZoneOffset.UTC);
+
     @Autowired
     public StatisticsClient(@Value("${ewn-statistics-server.url}") String serverUrl, RestTemplateBuilder builder) {
         super(
@@ -36,8 +42,8 @@ public class StatisticsClient extends BaseClient {
         String encodedStart;
         String encodedEnd;
         try {
-            encodedStart = URLEncoder.encode(start.toString(), "UTF-8");
-            encodedEnd = URLEncoder.encode(end.toString(), "UTF-8");
+            encodedStart = URLEncoder.encode(start.format(dtFormatter), "UTF-8");
+            encodedEnd = URLEncoder.encode(end.format(dtFormatter), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }

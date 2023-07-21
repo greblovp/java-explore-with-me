@@ -40,10 +40,9 @@ public class EndpointHitServiceImpl implements EndpointHitService {
         List<ViewStat> viewStats;
         if (unique && uris != null) {
             viewStats = endpointHitRepository.countHitsUniqueWithUriList(startDateTime, endDateTime, uris);
-        } else {
+        } else if (unique) {
             viewStats = endpointHitRepository.countHitsUnique(startDateTime, endDateTime);
-        }
-        if (!unique && uris != null) {
+        } else if (uris != null) {
             viewStats = endpointHitRepository.countHitsNotUniqueWithUriList(startDateTime, endDateTime, uris);
         } else {
             viewStats = endpointHitRepository.countHitsNotUnique(startDateTime, endDateTime);
