@@ -2,16 +2,23 @@ package ru.practicum.ewm.model;
 
 import ru.practicum.ewm.dto.EndpointHitDto;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EndpointHitMapper {
+    private static final DateTimeFormatter dtFormatter = DateTimeFormatter
+            .ofPattern("yyyy-MM-dd HH:mm:ss")
+            .withZone(ZoneOffset.UTC);
+
     public static EndpointHitDto toEndpointHitDto(EndpointHit endpointHit) {
         return EndpointHitDto.builder()
                 .app(endpointHit.getApp())
                 .uri(endpointHit.getUri())
                 .ip(endpointHit.getIp())
-                .timestamp(endpointHit.getTimestamp())
+                .timestamp(endpointHit.getTimestamp().format(dtFormatter))
                 .build();
     }
 
@@ -28,7 +35,7 @@ public class EndpointHitMapper {
         endpointHit.setApp(endpointHitDto.getApp());
         endpointHit.setUri(endpointHitDto.getUri());
         endpointHit.setIp(endpointHitDto.getIp());
-        endpointHit.setTimestamp(endpointHitDto.getTimestamp());
+        endpointHit.setTimestamp(LocalDateTime.parse(endpointHitDto.getTimestamp(), dtFormatter));
         return endpointHit;
     }
 }
