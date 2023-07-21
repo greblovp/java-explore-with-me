@@ -42,7 +42,7 @@ public class StatisticsClient extends BaseClient {
             throw new RuntimeException(e);
         }
         Map<String, Object> parameters = Map.of(
-                "start",encodedStart,
+                "start", encodedStart,
                 "end", encodedEnd,
                 "uris", uris,
                 "unique", unique

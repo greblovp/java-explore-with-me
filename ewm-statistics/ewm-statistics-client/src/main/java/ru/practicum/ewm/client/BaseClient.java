@@ -32,7 +32,7 @@ public class BaseClient {
     }
 
     protected <T> ResponseEntity<Object> put(String path, T body) {
-        return put(path,null, body);
+        return put(path, null, body);
     }
 
     protected <T> ResponseEntity<Object> put(String path, @Nullable Map<String, Object> parameters, T body) {
