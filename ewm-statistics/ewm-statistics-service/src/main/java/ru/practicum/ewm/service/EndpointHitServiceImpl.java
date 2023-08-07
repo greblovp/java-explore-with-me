@@ -38,6 +38,9 @@ public class EndpointHitServiceImpl implements EndpointHitService {
     public Collection<ViewStatDto> getEndpointHits(String start, String end, List<String> uris, Boolean unique) {
         LocalDateTime startDateTime = LocalDateTime.parse(start, dtFormatter);
         LocalDateTime endDateTime = LocalDateTime.parse(end, dtFormatter);
+        if (endDateTime.isBefore(startDateTime)) {
+            throw new IllegalArgumentException("Дата оконачания должна быть больше даты начала");
+        }
         List<ViewStat> viewStats;
         if (unique && uris != null) {
             viewStats = endpointHitRepository.countHitsUniqueWithUriList(startDateTime, endDateTime, uris);
