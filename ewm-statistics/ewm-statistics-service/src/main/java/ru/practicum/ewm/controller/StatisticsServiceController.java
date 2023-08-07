@@ -8,8 +8,9 @@ import ru.practicum.ewm.dto.EndpointHitDto;
 import ru.practicum.ewm.dto.ViewStatDto;
 import ru.practicum.ewm.service.EndpointHitService;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,10 +28,10 @@ public class StatisticsServiceController {
     @GetMapping("/stats")
     public Collection<ViewStatDto> getBookings(@RequestParam String start,
                                                @RequestParam String end,
-                                               @RequestParam(required = false) List<String> uris,
+                                               @RequestParam(required = false) String[] uris,
                                                @RequestParam(defaultValue = "false") Boolean unique) {
         log.info("Получение статистики по посещениям. Дата и время начала - {}. Дата и время конца - {}. " +
                 "Список uri - {}. Нужно ли учитывать только уникальные посещения - {}", start, end, uris, unique);
-        return endpointHitService.getEndpointHits(start, end, uris, unique);
+        return endpointHitService.getEndpointHits(start, end, Arrays.stream(uris).collect(Collectors.toList()), unique);
     }
 }
