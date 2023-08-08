@@ -30,12 +30,13 @@ import java.util.stream.StreamSupport;
 @Service
 @RequiredArgsConstructor
 public class CompilationServiceImpl implements CompilationService {
+    private static final int MIN_TITLE_LENGTH = 1;
+    private static final int MAX_TITLE_LENGTH = 50;
+
     private final CompilationRepository compilationRepository;
     private final StatisticsService statisticsService;
     private final RequestService requestService;
     private final EventRepository eventRepository;
-    private static final int MIN_TITLE_LENGTH = 1;
-    private static final int MAX_TITLE_LENGTH = 50;
 
     @Transactional(readOnly = true)
     @Override

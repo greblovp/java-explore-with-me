@@ -14,6 +14,7 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <ewm.statistics.dto.version>0.0.1-SNAPSHOT</ewm.statistics.dto.version>
     </properties>
 
     <dependencies>
@@ -30,7 +31,7 @@
         <dependency>
             <groupId>ru.practicum</groupId>
             <artifactId>ewm-statistics-dto</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${ewm.statistics.dto.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

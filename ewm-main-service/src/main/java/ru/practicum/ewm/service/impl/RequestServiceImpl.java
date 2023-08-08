@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 
 @Service
@@ -135,14 +136,13 @@ public class RequestServiceImpl implements RequestService {
             }
 
             if (alreadyConfirmedRequests >= event.getParticipantLimit()) {
-                rejectAllRequests(eventId);
+                rejectAllRequests(eventId, requestsToUpdate);
                 throw new ConditionsNotMetException("Лимит подтвержденных заявок уже достигнут");
             }
             requestToUpdate.setStatus(newStatus);
 
             if (newStatus.equals(RequestStatus.CONFIRMED)) {
                 alreadyConfirmedRequests++;
-
             }
         }
 
@@ -162,7 +162,13 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Transactional
-    protected void rejectAllRequests(Long eventId) {
+    protected void rejectAllRequests(Long eventId, Iterable<ParticipationRequest> requestsToUpdate) {
+        List<ParticipationRequest> requestsUpdated = StreamSupport.stream(requestsToUpdate.spliterator(), false)
+                .filter(request -> request.getStatus().equals(RequestStatus.CONFIRMED))
+                .collect(Collectors.toList());
+
+        requestRepository.saveAll(requestsUpdated);
+
         BooleanBuilder predicate = new BooleanBuilder();
 
         predicate.and(qParticipationRequest.eventId.eq(eventId))

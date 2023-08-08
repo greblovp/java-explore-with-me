@@ -37,6 +37,12 @@ import java.util.stream.StreamSupport;
 @Service
 @RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
+    private static final int MIN_ANNOTATION_LENGTH = 20;
+    private static final int MAX_ANNOTATION_LENGTH = 2000;
+    private static final int MIN_DESCRIPTION_LENGTH = 20;
+    private static final int MAX_DESCRIPTION_LENGTH = 7000;
+    private static final int MIN_TITLE_LENGTH = 3;
+    private static final int MAX_TITLE_LENGTH = 120;
 
     private final EventRepository eventRepository;
     private final StatisticsService statisticsService;
@@ -47,13 +53,6 @@ public class EventServiceImpl implements EventService {
 
     private final QEvent qEvent = QEvent.event;
     private final QParticipationRequest qParticipationRequest = QParticipationRequest.participationRequest;
-
-    private static final int MIN_ANNOTATION_LENGTH = 20;
-    private static final int MAX_ANNOTATION_LENGTH = 2000;
-    private static final int MIN_DESCRIPTION_LENGTH = 20;
-    private static final int MAX_DESCRIPTION_LENGTH = 7000;
-    private static final int MIN_TITLE_LENGTH = 3;
-    private static final int MAX_TITLE_LENGTH = 120;
 
     @Transactional(readOnly = true)
     @Override

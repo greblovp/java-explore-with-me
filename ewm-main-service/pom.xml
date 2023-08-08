@@ -13,16 +13,20 @@
 
     <name>Explore With Me Main Service</name>
 
+    <properties>
+        <querydsl.version>5.0.0</querydsl.version>
+        <httpclient.version>4.5.13</httpclient.version>
+        <ewm.statistics.client.version>0.0.1-SNAPSHOT</ewm.statistics.client.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-jpa</artifactId>
-            <version>5.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.13</version>
         </dependency>
 
         <dependency>
@@ -70,7 +74,7 @@
         <dependency>
             <groupId>ru.practicum</groupId>
             <artifactId>ewm-statistics-client</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${ewm.statistics.client.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

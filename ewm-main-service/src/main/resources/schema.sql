@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS events
     CONSTRAINT fk_events_to_users FOREIGN KEY (initiator_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT pk_event PRIMARY KEY (id)
 );
+CREATE INDEX idx_category_id ON events (category_id);
 
 CREATE TABLE IF NOT EXISTS compilations
 (
@@ -82,3 +83,5 @@ CREATE TABLE IF NOT EXISTS participation_requests
     CONSTRAINT fk_participation_requests_to_users FOREIGN KEY (requester_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_participation_requests_to_events FOREIGN KEY (event_id) REFERENCES events (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+CREATE INDEX idx_event_id ON participation_requests (event_id);
+CREATE INDEX idx_requester_id ON participation_requests (requester_id);
