@@ -29,7 +29,8 @@ public class EndpointHitServiceImpl implements EndpointHitService {
     @Override
     public EndpointHitDto createEndpointHit(EndpointHitDto endpointHitDto) {
         EndpointHit endpointHit = EndpointHitMapper.toEndpointHit(endpointHitDto);
-        return EndpointHitMapper.toEndpointHitDto(endpointHitRepository.save(endpointHit));
+        EndpointHit savedHit = endpointHitRepository.save(endpointHit);
+        return EndpointHitMapper.toEndpointHitDto(savedHit);
     }
 
     @Transactional(readOnly = true)
@@ -37,6 +38,9 @@ public class EndpointHitServiceImpl implements EndpointHitService {
     public Collection<ViewStatDto> getEndpointHits(String start, String end, List<String> uris, Boolean unique) {
         LocalDateTime startDateTime = LocalDateTime.parse(start, dtFormatter);
         LocalDateTime endDateTime = LocalDateTime.parse(end, dtFormatter);
+        if (endDateTime.isBefore(startDateTime)) {
+            throw new IllegalArgumentException("Дата оконачания должна быть больше даты начала");
+        }
         List<ViewStat> viewStats;
         if (unique && uris != null) {
             viewStats = endpointHitRepository.countHitsUniqueWithUriList(startDateTime, endDateTime, uris);

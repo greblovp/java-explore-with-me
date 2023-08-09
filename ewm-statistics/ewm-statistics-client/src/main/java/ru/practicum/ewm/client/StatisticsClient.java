@@ -10,12 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.practicum.ewm.dto.EndpointHitDto;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+
 import java.util.Map;
 
 @Service
@@ -38,18 +36,10 @@ public class StatisticsClient extends BaseClient {
         return post("/hit", requestDto);
     }
 
-    public ResponseEntity<Object> getEndpointHits(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
-        String encodedStart;
-        String encodedEnd;
-        try {
-            encodedStart = URLEncoder.encode(start.format(dtFormatter), "UTF-8");
-            encodedEnd = URLEncoder.encode(end.format(dtFormatter), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+    public ResponseEntity<Object> getEndpointHits(LocalDateTime start, LocalDateTime end, String[] uris, Boolean unique) {
         Map<String, Object> parameters = Map.of(
-                "start", encodedStart,
-                "end", encodedEnd,
+                "start", start.format(dtFormatter),
+                "end", end.format(dtFormatter),
                 "uris", uris,
                 "unique", unique
         );
