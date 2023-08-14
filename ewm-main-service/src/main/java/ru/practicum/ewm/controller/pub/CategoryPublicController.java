@@ -24,7 +24,7 @@ public class CategoryPublicController {
 
     @GetMapping("/{categoryId}")
     public CategoryDto getCategoryById(@PathVariable Long categoryId) {
-        log.info("Получение катебории по id: {}", categoryId);
+        log.info("Получение категории по id: {}", categoryId);
         return categoryService.getCategoryById(categoryId);
     }
 }

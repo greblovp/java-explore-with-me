@@ -28,7 +28,7 @@ public class Event {
     @ToString.Exclude
     private Category category;
 
-    @Column(nullable = false, name = "create_dttm")
+    @Column(nullable = false, name = "created_dttm")
     private LocalDateTime createdOn = LocalDateTime.now();
 
     @Column(nullable = false)
